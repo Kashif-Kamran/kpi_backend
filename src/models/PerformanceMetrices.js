@@ -11,28 +11,37 @@ const PerformanceMetricesSchema = new Schema({
     },
     csvTitle: {
         type: String,
-        required: true
+        required: true,
     },
     metriceName: {
         type: String,
-        required: true
+        required: true,
     },
     target: {
         type: Number,
-        required: true
+        required: true,
     },
     metricsData: [
+        {
+            data: {
+                type: Date
+            },
+            values: {
+                type: String
+            }
+        },
         {
             date: {
                 type: Date,
             },
             value: {
                 type: Number,
-
-            }
+            },
         }
-    ]
+    ],
 });
-// export PerformanceMetrices model
+
+
+
 const PerformanceMetrices = mongoose.model('PerformanceMetrices',PerformanceMetricesSchema);
 module.exports = PerformanceMetrices;

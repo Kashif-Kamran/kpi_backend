@@ -244,6 +244,29 @@ class ProjectService
         }
 
     }
+    // getAllProjects
+    async getAllProjects()
+    {
+        try
+        {
+            console.log("Get All Projects");
+            let projects = await this.ProjectSchema.find();
+            return {
+                status: 200,
+                data: projects
+            };
+        }
+        catch (error)
+        {
+            console.log(`ProjectService + getAllProjects : ${error.message}`);
+            return {
+                status: 500,
+                error: {
+                    message: "Projects Not Found"
+                }
+            }
+        }
+    }
 }
 // export Project service
 module.exports = ProjectService;
