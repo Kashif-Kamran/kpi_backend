@@ -23,14 +23,6 @@ const PerformanceMetricesSchema = new Schema({
     },
     metricsData: [
         {
-            data: {
-                type: Date
-            },
-            values: {
-                type: String
-            }
-        },
-        {
             date: {
                 type: Date,
             },
