@@ -6,8 +6,6 @@ const fs = require("fs");
 projectService = new ProjectService();
 const scheduler = require("node-schedule");
 
-// Create a new job to run at ever 10 seconds
-var counter = 0;
 var fileRead = false;
 var mockApiData = [];
 
@@ -48,13 +46,13 @@ const mockApi = scheduler.scheduleJob("*/4 * * * * *",async () =>
     {
         return x._id;
     });
-    if (projectIds.length != 0)
-        projectIds.forEach((itr) =>
-        {
-            performanceMetricService.addPerformanceMetricesData(itr,mockApiData.pop());
-        })
-    else
-        console.log("No Project Ids Found")
+    // if (projectIds.length != 0)
+    //     projectIds.forEach((itr) =>
+    //     {
+    //         performanceMetricService.addPerformanceMetricesData(itr,mockApiData.pop());
+    //     })
+    // else
+    //     console.log("No Project Ids Found")
 });
 
 module.exports = mockApi;

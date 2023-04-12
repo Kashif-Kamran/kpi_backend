@@ -267,6 +267,7 @@ class ProjectService
             }
         }
     }
+    // Set Errors
 }
 // export Project service
 module.exports = ProjectService;

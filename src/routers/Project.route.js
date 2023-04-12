@@ -3,7 +3,7 @@ const ProjectService = require('../services/Project.service');
 const projectService = new ProjectService();
 const verifyToken = require('../verifyToken');
 // Check Weather Server is running or not
-projectRouter.get('/',(req,res) =>
+projectRouter.get('/',verifyToken,(req,res) =>
 {
     res.send({
         status: true,

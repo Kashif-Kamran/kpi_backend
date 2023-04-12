@@ -26,14 +26,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(morgan('tiny')); // logger to log the incoming requests on the server
 
-// Create Routes    
+// Create Routes
 app.use("/teamlead",teamLeadRouter);
 app.use("/project",projectRouter);
 app.use("/recomendation",recomendationRouter);
 
-
-
-// Start Server
 app.listen(port,() =>
 {
     console.log(`Server is running on port ${port}`);

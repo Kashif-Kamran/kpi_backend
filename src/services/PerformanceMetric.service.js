@@ -37,9 +37,6 @@ class PerformanceMetricService
     {
         try
         {
-            // let result = await this.PMSchema.find({
-            //     projectId: projectId+++
-            // });
             let dataToSave = Object.keys(performanceMetricesData).map((itr) =>
             {
                 const [title,target] = itr.split(/(?<=^\S+)\s(?=\S)/);
@@ -90,7 +87,6 @@ class PerformanceMetricService
             };
         }
     }
-
 }
 const performanceMetricService = new PerformanceMetricService();
 module.exports = performanceMetricService;
