@@ -55,6 +55,7 @@ class PerformanceMetricService
                     metriceName: itr.metriceName
                 });
                 console.log("project : ",project._id,project.metriceName);
+                console.log(project.metricsData[project.metricsData.length - 2])
                 let lastestDate = new Date(project.metricsData[project.metricsData.length - 1].date);
                 lastestDate.setDate(lastestDate.getDate() + 1);
                 console.log("lastestDate : ",lastestDate);

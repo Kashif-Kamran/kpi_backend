@@ -32,7 +32,7 @@ function readDataFromFile()
 
 }
 
-const mockApi = scheduler.scheduleJob("*/4 * * * * *",async () =>
+const mockApi = scheduler.scheduleJob("*/10 * * * * *",async () =>
 {
     if (fileRead == false || (mockApiData && mockApiData.length == 0))
     {
@@ -46,13 +46,13 @@ const mockApi = scheduler.scheduleJob("*/4 * * * * *",async () =>
     {
         return x._id;
     });
-    // if (projectIds.length != 0)
-    //     projectIds.forEach((itr) =>
-    //     {
-    //         performanceMetricService.addPerformanceMetricesData(itr,mockApiData.pop());
-    //     })
-    // else
-    //     console.log("No Project Ids Found")
+    if (projectIds.length != 0)
+        projectIds.forEach((itr) =>
+        {
+            performanceMetricService.addPerformanceMetricesData(itr,mockApiData.pop());
+        })
+    else
+        console.log("No Project Ids Found")
 });
 
 module.exports = mockApi;
