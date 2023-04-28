@@ -11,8 +11,8 @@ const projectSchema = new Schema({
         type: String,
         required: true
     },
-    packageName: {
-        type: String,
+    publishedDate: {
+        type: Date,
         required: true
     },
     description: {

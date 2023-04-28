@@ -18,7 +18,7 @@ class ProjectService
             let newProject = new this.ProjectSchema({
                 projectName: projectInfo.projectName,
                 projectDescription: projectInfo.projectDescription,
-                packageName: projectInfo.packageName,
+                publishedDate: new Date(projectInfo.publishedDate),
                 teamLeadId: userId,
                 description: projectInfo.description,
                 country: projectInfo.country,
