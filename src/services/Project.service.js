@@ -11,9 +11,8 @@ class ProjectService
     {
         try
         {
-            let projectInfo = newProjectData.projectInfo;
-            projectInfo.teamLeadId = userId;
-            let performanceMetrices = newProjectData.performanceMetrices;
+            console.log(userId)
+            let projectInfo = newProjectData;
             // Saving the Project
             let newProject = new this.ProjectSchema({
                 projectName: projectInfo.projectName,
@@ -26,23 +25,10 @@ class ProjectService
                 sdkSet: projectInfo.sdkSet,
             });
             let result = await newProject.save();
-            // Get projectId 
-            let projectId = result._id;
-            let metricToSave = performanceMetrices.map((metrice) =>
-            {
-                return {
-                    projectId: projectId,
-                    csvTitle: metrice.csvTitle,
-                    metriceName: metrice.columnName,
-                    target: metrice.target,
-                    metricsData: metrice.metricsData
-                }
-            })
-            let performanceMetricesResult = await PerformanceMetrices.insertMany(metricToSave);
             return {
                 status: 200,
                 data: {
-                    savedProjectId: projectId,
+                    savedProject: result,
                     message: "Project Created Successfully"
                 }
             }
@@ -51,7 +37,7 @@ class ProjectService
         }
         catch (error)
         {
-            console.log("Error in Saving Project (Project Service)",error.message);
+            console.log("Error in Saving Project (Project Service)",error);
             return {
                 status: 500,
                 error: {
@@ -267,7 +253,7 @@ class ProjectService
             }
         }
     }
-    // Set Errors
+    // Get All Projects from Project service
 }
-// export Project service
-module.exports = ProjectService;
+const projectService = new ProjectService();
+module.exports = projectService;

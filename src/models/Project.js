@@ -54,18 +54,7 @@ const projectSchema = new Schema({
             type: String,
             required: true
         }
-    },
-    errors: [
-        {
-            date: {
-                type: Date
-            },
-            error: {
-                type: String
-            }
-
-        }
-    ]
+    }
 });
 // Export Project Model
 const Project = mongoose.model('Project',projectSchema);
