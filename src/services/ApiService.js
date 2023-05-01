@@ -95,6 +95,13 @@ const job = schedule.scheduleJob("*/5 * * * * *",async () =>
         projectsInfo.forEach(async (projectInfo) =>
         {
             performanceMetricesService.addNewRecordWithoutDate(projectInfo,record);
+            // the published date should be returned from the from ubove
+            // add new date to projectInfo
+            // send record to stabilityKpiService
+            // stabilityKpiService.addNewRecord(projectInfo,record);
+            // -- stability service firstly adds the error in error collection if exsists
+            // -- then its add sollution to sollution collection if exsisits
+            // -- then it adds the record in the stability Record Collection
         });
     }
     catch (err)

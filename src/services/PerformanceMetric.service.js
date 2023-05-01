@@ -204,15 +204,6 @@ class PerformanceMetricService
             crashes.metricsData.push({ date: newDate,value: newRecord.Crashes });
             anr.metricsData.push({ date: newDate,value: newRecord.ANR });
             // Save All Metrices
-
-            console.log("install : ",install.metricsData);
-            console.log("dau : ",dau.metricsData);
-            console.log("dau_installs : ",dau_installs.metricsData);
-            console.log("pt : ",pt.metricsData);
-            console.log("d1 : ",d1.metricsData);
-            console.log("imp : ",imp);
-            console.log("crashes : ",crashes.metricsData);
-            console.log("anr : ",anr.metricsData);
             await install.save();
             await dau.save();
             await dau_installs.save();
@@ -221,6 +212,13 @@ class PerformanceMetricService
             await imp.save();
             await crashes.save();
             await anr.save();
+            // it should return new Date
+            return {
+                status: 200,
+                data: {
+                    date: newDate
+                }
+            };
         }
         catch (error)
         {
