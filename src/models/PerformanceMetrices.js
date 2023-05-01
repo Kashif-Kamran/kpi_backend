@@ -24,16 +24,6 @@ const PerformanceMetricesSchema = new Schema({
                 type: Number,
             },
         }
-    ],
-    errors: [
-        {
-            date: {
-                type: Date
-            },
-            errorString: {
-                type: String
-            }
-        }
     ]
 });
 

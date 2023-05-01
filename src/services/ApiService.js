@@ -6,6 +6,7 @@ const schedule = require("node-schedule");
 const projectService = require("./Project.service");
 // require the performance metrices service
 const performanceMetricesService = require("./PerformanceMetric.service");
+const { error } = require("console");
 
 var mockApiData = [];
 var iterator = 0;
@@ -69,30 +70,37 @@ readDataFromFile();
 // create a job that runs at every 5 seconds
 const job = schedule.scheduleJob("*/5 * * * * *",async () =>
 {
-    if (mockApiData.length === 0)
+    try
     {
-        console.log("Data is not ready yet");
-        return;
+        if (mockApiData.length === 0)
+        {
+            console.log("Data is not ready yet");
+            return;
+        }
+        const projects = await projectService.getAllProjects();
+        if (projects.data.length === 0)
+        {
+            console.log("No Projects Found");
+            iterator = 0;
+            return;
+        }
+        const record = getNewApiRecord();
+        const projectsInfo = projects.data.map((project) =>
+        {
+            return {
+                projectId: project._id,
+                publishedDate: project.publishedDate
+            };
+        });
+        projectsInfo.forEach(async (projectInfo) =>
+        {
+            performanceMetricesService.addNewRecordWithoutDate(projectInfo,record);
+        });
     }
-    const projects = await projectService.getAllProjects();
-    if (projects.data.length === 0)
+    catch (err)
     {
-        console.log("No Projects Found");
-        iterator = 0;
-        return;
+        console.log("Mock Api Loading Error",error.message);
     }
-    const record = getNewApiRecord();
-    const projectsInfo = projects.data.map((project) =>
-    {
-        return {
-            projectId: project._id,
-            publishedDate: project.publishedDate
-        };
-    });
-    projectsInfo.forEach(async (projectInfo) =>
-    {
-        performanceMetricesService.addNewRecordWithoutDate(projectInfo,record);
-    });
 
 });
 
