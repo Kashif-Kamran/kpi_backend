@@ -1,5 +1,6 @@
 const projectRouter = require('express').Router();
 const projectService = require('../services/Project.service');
+const stabilityKpiService = require('../services/StabilityKpi.service');
 const performanceMetricService = require('../services/PerformanceMetric.service');
 const verifyToken = require('../verifyToken');
 // Check Weather Server is running or not
@@ -16,13 +17,13 @@ projectRouter.post('/create-new',verifyToken,async (req,res) =>
     console.log("Create New Project , Data :  \n",req.body);
     // Create Project with Provided Project Info
     let result = await projectService.createNewProject(req.body,req.userInfo.id);
-    // Check if the data has been saved successfully
     if (result.status == 200)
     {
         console.log(result.data.savedProject)
-        // Create Empty Performance Metrices    
         performanceMetricService.createEmptyPerformanceMetrices(result.data.savedProject._id);
+        stabilityKpiService.createStabilityKpi(result.data.savedProject._id);
     }
+    // create new Stability Kpi
     res.status(200).send("Hes Got Your Request");
 });
 
