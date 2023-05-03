@@ -1,6 +1,7 @@
 const StabilityKpi = require("../models/StabilityKpi");
 const StabilityKpiRecord = require("../models/StabilityRecord");
 const ErrorService = require("./Error.service");
+const ErrorSolutionService = require("./ErrorSolution.service");
 class StabilityKpiService
 {
     constructor()
@@ -37,6 +38,32 @@ class StabilityKpiService
             }
         }
     }
+    // Function to delete stabilityKpi by project Id
+    async deleteStabilityKpiByProjectId(projectId)
+    {
+        try
+        {
+            const result = await this.stabilityKpiSchema.deleteOne({ project_id: projectId });
+            return {
+                status: 200,
+                data: {
+                    message: "Stability Kpi Deleted Successfully",
+                    deletedStabilityKpi: result
+                }
+            }
+        }
+        catch (error)
+        {
+            console.log("Error : ",error);
+            return {
+                status: 500,
+                error: {
+                    message: `Database Error : ${error.message}`
+                }
+            }
+        }
+    }
+    // Adding New Record to Stability Kpi
     async addNewRecord(projectInfo,record)
     {
 
@@ -66,17 +93,26 @@ class StabilityKpiService
             if (description !== undefined && description !== "" && description !== null)
             {
                 const title = tokenizeUntilNewline(record.Vital);
-
                 const error = await ErrorService.getErrorByTitle(title);
                 if (error.status === 404)
                 {
                     // Now new Error Should be created
                     const newError = await ErrorService.createError(title,description);
-                    newRecord.error_id = newError.data.saved._id
+                    newRecord.error_id = newError.data.saved._id;
                 }
                 else if (error.status === 200)
                 {
                     newRecord.error_id = error.data.retrived._id;
+                }
+                // Now insert the sollution if exsists
+                const solution = record.possible_fix;
+                console.log("Solution : ",solution);
+                if (solution !== undefined && solution !== "" && solution !== null)
+                {
+                    const solObject = {}
+                    solObject.error_id = newRecord.error_id;
+                    solObject.explanation = solution;
+                    const newSolution = await ErrorSolutionService.createErrorSolution(newRecord.error_id,solObject);
                 }
             }
             const newStabilityRecord = new StabilityKpiRecord(newRecord);
@@ -101,6 +137,5 @@ class StabilityKpiService
         }
     }
 }
-// Exporting the class
 const stabilityKpiService = new StabilityKpiService();
 module.exports = stabilityKpiService;

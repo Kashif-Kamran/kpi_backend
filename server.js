@@ -8,6 +8,7 @@ const mockApi = require("./src/services/ApiService");
 const teamLeadRouter = require("./src/routers/TeamLead.route");
 const projectRouter = require("./src/routers/Project.route");
 const recomendationRouter = require("./src/routers/Recomendation.route");
+const errorRouter = require("./src/routers/Error.route");
 
 const port = 4000 || process.env.PORT; // Application Port
 
@@ -30,6 +31,7 @@ app.use(morgan('tiny')); // logger to log the incoming requests on the server
 app.use("/teamlead",teamLeadRouter);
 app.use("/project",projectRouter);
 app.use("/recomendation",recomendationRouter);
+app.use("/error",errorRouter);
 
 app.listen(port,() =>
 {

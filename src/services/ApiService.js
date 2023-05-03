@@ -120,10 +120,12 @@ function getNewApiRecord()
     const ANR = parseFloat(record["ANR (0.25-)"]);
     const Crashes = parseFloat(record["Crashes (0.1-)"]);
     const IMP_DAU = parseFloat(record["IMP / DAU (8+)"]);
+    // Getting Vital and converting it into meaning full information
     const VitalError = record["Vital"];
-
     const Vital = getMeaningFullError(VitalError);
-    return { Installs,DAU,DAU_Install,PT,D1,ANR,Crashes,IMP_DAU,Vital };
+
+    const possible_fix = record["Possible Fix"];
+    return { Installs,DAU,DAU_Install,PT,D1,ANR,Crashes,IMP_DAU,Vital,possible_fix };
 }
 readDataFromFile();
 // create a job that runs at every 5 seconds

@@ -17,6 +17,7 @@ projectRouter.post('/create-new',verifyToken,async (req,res) =>
     console.log("Create New Project , Data :  \n",req.body);
     // Create Project with Provided Project Info
     let result = await projectService.createNewProject(req.body,req.userInfo.id);
+
     if (result.status == 200)
     {
         console.log(result.data.savedProject)
@@ -47,6 +48,8 @@ projectRouter.delete('/delete-project/:id',verifyToken,async (req,res) =>
 {
     console.log("Delete Project Route Hit : ",req.params.id);
     let result = await projectService.deleteProjectById(req.params.id);
+    // delete Stability Kpi
+    stabilityKpiService.deleteStabilityKpiByProjectId(req.params.id);
     res.status(result.status).send(result);
 });
 // Create a route to update a project
