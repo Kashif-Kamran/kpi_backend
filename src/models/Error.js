@@ -1,14 +1,17 @@
 const mongoose = require('mongoose');
 const errorSchema = new mongoose.Schema({
-    _id: {
+    title: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    description: {
         type: String,
         required: true
     },
-    description: {
-        type: String
-    },
-    type: {
-        type: String
+    frequency: {
+        type: Number,
+        default: 0
     }
 });
 module.exports = mongoose.model('Error',errorSchema);
