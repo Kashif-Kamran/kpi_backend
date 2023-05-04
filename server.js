@@ -9,7 +9,8 @@ const teamLeadRouter = require("./src/routers/TeamLead.route");
 const projectRouter = require("./src/routers/Project.route");
 const recomendationRouter = require("./src/routers/Recomendation.route");
 const errorRouter = require("./src/routers/Error.route");
-
+const stabilityKpiRouter = require("./src/routers/StabilityKpi.route");
+const errorSollutionsRoute = require("./src/routers/ErrorSolution.route");
 const port = 4000 || process.env.PORT; // Application Port
 
 
@@ -32,6 +33,8 @@ app.use("/teamlead",teamLeadRouter);
 app.use("/project",projectRouter);
 app.use("/recomendation",recomendationRouter);
 app.use("/error",errorRouter);
+app.use("/stability",stabilityKpiRouter);
+app.use("/error-sollution",errorSollutionsRoute);
 
 app.listen(port,() =>
 {

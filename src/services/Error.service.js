@@ -67,6 +67,38 @@ class ErrorService
             }
         }
     }
+    async getErrorById(errorId)
+    {
+        try
+        {
+            const errorById = await this.errorSchema.findById(errorId);
+            if (errorById === null)
+            {
+                return {
+                    status: 404,
+                    error: {
+                        message: "Error Not Found"
+                    }
+                }
+            }
+            return {
+                status: 200,
+                data: {
+                    retrived: errorById
+                }
+            }
+        }
+        catch (error)
+        {
+            console.log("Error : ",err);
+            return {
+                status: 500,
+                error: {
+                    message: `Database Error : ${err.message}`
+                }
+            }
+        }
+    }
 }
 const errorService = new ErrorService();
 module.exports = errorService;

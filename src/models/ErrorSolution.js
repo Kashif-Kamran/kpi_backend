@@ -6,7 +6,8 @@ const errorSolutionSchema = new mongoose.Schema({
         required: true
     },
     explanation: {
-        type: String
+        type: String,
+        unique: true,
     },
     possibleURL: [
         {

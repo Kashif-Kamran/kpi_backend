@@ -43,12 +43,18 @@ class StabilityKpiService
     {
         try
         {
-            const result = await this.stabilityKpiSchema.deleteOne({ project_id: projectId });
+            // also delete all Stability Records having stability id 
+            const result = await this.stabilityKpiSchema.findOne({ project_id: projectId });
+            // delete all records having id of resutl
+            await StabilityKpiRecord.deleteMany({ stabilityKpi_id: result._id });
+            // Now Delete result as well
+            const deletionStatus = this.stabilityKpiSchema.deleteOne({ project_id: projectId });
+            console.log("Deletion Status : ",deletionStatus)
             return {
                 status: 200,
                 data: {
                     message: "Stability Kpi Deleted Successfully",
-                    deletedStabilityKpi: result
+                    deletedStabilityKpi: deletionStatus
                 }
             }
         }
@@ -136,6 +142,31 @@ class StabilityKpiService
             }
         }
     }
+    async getStabilityKpiIdByProjectId(projectId)
+    {
+        try
+        {
+            let kpiId = await this.stabilityKpiSchema.findOne({ project_id: projectId });
+            return {
+                status: 200,
+                data: {
+                    kpiId: kpiId._id
+                }
+            }
+        }
+        catch (error)
+        {
+            console.log("Error : ",error);
+            return {
+                status: 500,
+                error: {
+                    message: `Database Error At StabilityKPI.service : ${error.message}`
+                }
+            }
+
+        }
+    }
 }
+
 const stabilityKpiService = new StabilityKpiService();
 module.exports = stabilityKpiService;
