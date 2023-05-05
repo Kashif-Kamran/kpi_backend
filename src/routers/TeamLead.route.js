@@ -38,6 +38,17 @@ teamLeadRouter.get("/teamleadinfo",verifyToken,async (req,res) =>
     let readyToSend = logedInTeamLead.data;
     readyToSend.password = undefined;
     return res.send(readyToSend);
+});
+teamLeadRouter.post("/forget-password",(req,res) =>
+{
+    // log the reqest body
+    console.log("Request Body : ",req.body);
+    return res.status(200).send({
+        status: 200,
+        data: {
+            message: "Yes You Are Here",
+        }
+    })
 })
 
 

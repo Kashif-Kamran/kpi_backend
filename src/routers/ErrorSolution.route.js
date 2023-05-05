@@ -17,8 +17,14 @@ ErrorSollutionRouter.get("/",async (req,res) =>
 ErrorSollutionRouter.get("/:id",async (req,res) =>
 {
     const result = await ErrorSollutionService.getErrorSolutionById(req.params.id)
-    console.log("Result is ",result);
     return res.status(result.status).send(result)
 });
+ErrorSollutionRouter.post("/rank-up/:id",async (req,res) =>
+{
+    console.log("This is New Error Sollution",req.params.id)
+    const result = await ErrorSollutionService.rankErrorSolution(req.params.id)
+    return res.status(result.status).send(result)
+    // return res.status(200).send("This is New Error Sollution")
+})
 // export router
 module.exports = ErrorSollutionRouter;

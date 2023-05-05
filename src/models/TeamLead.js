@@ -16,6 +16,11 @@ const teamLeadSchema = new Schema({
         required: true,
         unique: true
     },
+    uniqueAnswer:
+    {
+        type: String,
+        required: true
+    },
     password: {
         type: String,
         required: true

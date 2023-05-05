@@ -121,6 +121,41 @@ class ErrorSolutionService
             }
         }
     }
+    // create a function that will rankup errorSollutiion
+    async rankErrorSolution(errorSolutionId)
+    {
+        try
+        {
+
+            const errorSolution = await this.errorSolutionSchema.findOne({ _id: errorSolutionId });
+            if (errorSolution === null)
+            {
+                return {
+                    status: 404,
+                    error: {
+                        message: "Error Solution Not Found"
+                    }
+                }
+            }
+            errorSolution.rank = errorSolution.rank + 1;
+            const result = await errorSolution.save();
+            return {
+                status: 200,
+                data: result
+            }
+        }
+        catch (error)
+        {
+            console.log("Raking Error Occured",error)
+            return {
+                status: 500,
+                error: {
+                    message: "Database Error Occured while Ranking"
+                }
+            }
+        }
+
+    }
 }
 const errorSolutionService = new ErrorSolutionService();
 module.exports = errorSolutionService;
