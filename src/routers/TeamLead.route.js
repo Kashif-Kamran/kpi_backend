@@ -39,16 +39,22 @@ teamLeadRouter.get("/teamleadinfo",verifyToken,async (req,res) =>
     readyToSend.password = undefined;
     return res.send(readyToSend);
 });
-teamLeadRouter.post("/forget-password",(req,res) =>
+teamLeadRouter.post("/forget-password",async (req,res) =>
 {
-    // log the reqest body
-    console.log("Request Body : ",req.body);
-    return res.status(200).send({
-        status: 200,
-        data: {
-            message: "Yes You Are Here",
-        }
-    })
+    console.log("Forget Password Route Hit : ",req.body);
+    const response = await teamLeadService.getTeamLeadByUsername(req.body.username);
+    if (response.status == 404)
+    {
+        return res.status(404).send({ status: 404,error: { message: "Team Lead Not Found" } });
+    }
+    if (response.data.uniqueAnswer != req.body.uniqueAnswer)
+    {
+        return res.status(404).send({ status: 404,error: { message: "Unique Answer Not Matched" } });
+    }
+
+    let result = await teamLeadService.updatePassword(response.data._id,req.body.newPassword);
+    return res.status(result.status).send(result);
+    
 })
 
 

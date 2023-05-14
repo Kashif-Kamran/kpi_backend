@@ -104,19 +104,19 @@ class TeamLeadService
             if (!user)
 
                 return {
-                    status: false,
+                    status: 404,
                     error: {
                         message: "User Not Found"
                     }
                 };
             return {
-                status: true,
+                status: 200,
                 data: user
             };
         } catch (error)
         {
             return {
-                status: false,
+                status: 500,
                 error: {
                     message: "Invalid Token"
                 }
@@ -131,24 +131,76 @@ class TeamLeadService
             let teamLead = await this.teamLead.findOne({ _id: id });
             if (!teamLead)
                 return {
-                    status: false,
+                    status: 404,
                     error: {
                         message: "Team Lead Not Found"
                     }
                 };
             return {
-                status: true,
+                status: 200,
                 data: teamLead
             };
         } catch (error) 
         {
             return {
-                status: false,
+                status: 500,
                 error: {
                     message: "Database Error"
                 }
             };
 
+        }
+    }
+    // update password
+    async updatePassword(userId,newPassword)
+    {
+        try
+        {
+            console.log("Request : ",newPassword,userId);
+            const result = await this.teamLead.updateOne({ _id: userId },{ password: newPassword });
+            console.log("Result : ",result);
+            return {
+                status: 200,
+                data: {
+                    message: "Password Updated Successfully"
+                }
+            }
+        } catch (error)
+        {
+            return {
+                status: 500,
+                error: {
+                    message: "Database Error"
+                }
+            };
+        }
+    }
+    // get teamlead by username
+    async getTeamLeadByUsername(username)
+    {
+        try
+        {
+            const teamLead = await this.teamLead.findOne({ username: username });
+            if (!teamLead)
+                return {
+                    status: 404,
+                    error: {
+                        message: "Team Lead Not Found"
+                    }
+                };
+            return {
+                status: 200,
+                data: teamLead
+            };
+
+        } catch (error)
+        {
+            return {
+                status: 500,
+                error: {
+                    message: "Database Error while loading team lead by username"
+                }
+            };
         }
     }
 }
