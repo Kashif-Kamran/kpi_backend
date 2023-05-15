@@ -4,6 +4,7 @@ const TeamLead = require('../models/TeamLead');
 const jwt = require('jsonwebtoken');
 
 // Create Team Lead Service
+
 class TeamLeadService
 {
     // Create Constructor with 
@@ -194,6 +195,32 @@ class TeamLeadService
             };
 
         } catch (error)
+        {
+            return {
+                status: 500,
+                error: {
+                    message: "Database Error while loading team lead by username"
+                }
+            };
+        }
+    }
+    // update TeamLead Data 
+    async updateTeamLeadData(teamLeadId,teamLeadData)
+    {
+        try
+        {
+            console.log("Team Lead Data : ",teamLeadData);
+            console.log("Team Lead ID : ",teamLeadId);
+            // update team lead Data
+            await this.teamLead.updateOne({ _id: teamLeadId },teamLeadData);
+            return {
+                status: 200,
+                data: {
+                    message: "Team Lead Data Updated Successfully"
+                }
+            }
+        }
+        catch (error)
         {
             return {
                 status: 500,

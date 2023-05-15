@@ -7,9 +7,19 @@ const verifyToken = require('../verifyToken'); // Import Verify Token
 teamLeadRouter.get('/',(req,res) =>
 {
     res.send({
-        status: true,
-        message: "Team Lead Router is Working"
+        status: 200,
+        data: {
+            message: "Team Lead Router is Working"
+        }
+
     });
+});
+teamLeadRouter.get('/info',verifyToken,async (req,res) =>
+{
+    console.log("Team Lead Info Route Hit : ",req.userInfo)
+    const response = await teamLeadService.getTeamLeadById(req.userInfo.id)
+    console.log(response)
+    return res.status(response.status).send(response);
 });
 // Register TeamLead
 teamLeadRouter.post('/register',async (req,res) =>
@@ -54,8 +64,15 @@ teamLeadRouter.post("/forget-password",async (req,res) =>
 
     let result = await teamLeadService.updatePassword(response.data._id,req.body.newPassword);
     return res.status(result.status).send(result);
-    
-})
+
+});
+teamLeadRouter.post("/update",verifyToken,async (req,res) =>
+{
+    console.log("Update Route Hit : ",req.body);
+    console.log("User Info : ",req.userInfo);
+    teamLeadService.updateTeamLeadData(req.userInfo.id,req.body);
+    res.status(200).send({ status: 200,data: { message: "Update Route Hit" } })
+});
 
 
 module.exports = teamLeadRouter;

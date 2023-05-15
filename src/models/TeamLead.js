@@ -28,6 +28,10 @@ const teamLeadSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    companyName: {
+        type: String,
+        default: "(No Defined)"
     }
 });
 

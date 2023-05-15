@@ -30,7 +30,7 @@ async function readDataFromFile()
     // read the file at csvFilePath and log the data
     await new Promise((resolve) =>
     {
-        const csvFilePath = path.join(__dirname,'../','Data','Updated_Data.csv');
+        const csvFilePath = path.join(__dirname,'../','Data','Data.csv');
         console.log("File : Path : ",csvFilePath)
         fs.createReadStream(csvFilePath)
             .pipe(csv())
@@ -133,6 +133,7 @@ const job = schedule.scheduleJob("*/10 * * * * *",async () =>
 {
     try
     {
+        console.log("")
         if (mockApiData.length === 0)
         {
             console.log("Data is not ready yet");
@@ -170,6 +171,7 @@ const job = schedule.scheduleJob("*/10 * * * * *",async () =>
     }
     catch (err)
     {
+        console.log(err)
         console.log("Mock Api Loading Error",error.message);
     }
 
