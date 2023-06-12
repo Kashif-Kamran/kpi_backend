@@ -12,7 +12,7 @@ const errorSolutionSchema = new mongoose.Schema({
     possibleURL: [
         {
             type: String
-        }
+        }   
     ],
     rank: {
         type: Number,

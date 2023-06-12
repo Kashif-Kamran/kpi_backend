@@ -129,7 +129,7 @@ function getNewApiRecord()
 }
 readDataFromFile();
 // create a job that runs at every 5 seconds
-const job = schedule.scheduleJob("*/10 * * * * *",async () =>
+const job = schedule.scheduleJob("*/30 * * * * *",async () =>
 {
     try
     {
@@ -160,6 +160,11 @@ const job = schedule.scheduleJob("*/10 * * * * *",async () =>
             const { Vital,possible_fix,...tempRecord } = record;
             // add new record to performanceMetricesService
             const response = await performanceMetricesService.addNewRecordWithoutDate(projectInfo,tempRecord);
+
+            // Here make a call to to api service and find the sollutions of error
+
+            // console.log("Vital : ",Vital);
+
             // add new date to projectInfo
             projectInfo.newDate = response.data.date;
             // send record to stabilityKpiService

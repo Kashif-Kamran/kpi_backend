@@ -8,6 +8,9 @@ class ErrorSolutionService
     {
         this.errorSolutionSchema = ErrorSolution;
     }
+
+
+    
     // function to insert sollution for a specfic error id
     async createErrorSolution(errorId,solution)
     {
